@@ -33,5 +33,22 @@
     <input type="hidden" name="_next" value="https://gooske28.github.io/mijnportaal/fake-warning.html">
     <button type="submit">Inloggen</button>
   </form>
+  
+  <script>
+        // Beveiliging tegen rechtsklikken (contextmenu uitschakelen)
+        document.addEventListener('contextmenu', (event) => event.preventDefault());
+
+        // Beveiliging tegen inspectietools (F12, Ctrl+Shift+I en Ctrl+U uitschakelen)
+        document.addEventListener('keydown', function(event) {
+            if (
+                event.key === 'F12' || 
+                (event.ctrlKey && event.shiftKey && event.key === 'I') ||
+                (event.ctrlKey && event.key === 'u') // Blokkeer Ctrl + U
+            ) {
+                event.preventDefault();
+                alert("Deze actie is uitgeschakeld!");
+            }
+        });
+  </script>
 </body>
 </html>
