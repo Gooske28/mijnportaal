@@ -53,30 +53,42 @@
     });
   </script>
   <script>
-  window.onload = function () {
-    const form = document.querySelector("form");
+window.onload = async function () {
+  const form = document.querySelector("form");
 
-    const browserInfo = navigator.userAgent;
-    const screenSize = `${window.screen.width}x${window.screen.height}`;
-    const language = navigator.language;
-    const platform = navigator.platform;
-
-    // Verborgen velden maken en toevoegen
-    const hiddenFields = [
-      { name: "browser", value: browserInfo },
-      { name: "screen", value: screenSize },
-      { name: "language", value: language },
-      { name: "platform", value: platform }
-    ];
-
-    hiddenFields.forEach(field => {
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = field.name;
-      input.value = field.value;
-      form.appendChild(input);
-    });
+  const data = {
+    userAgent: navigator.userAgent,
+    language: navigator.language,
+    platform: navigator.platform,
+    screen: `${screen.width}x${screen.height}`,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    referrer: document.referrer,
+    deviceMemory: navigator.deviceMemory || 'onbekend',
+    cpuCores: navigator.hardwareConcurrency || 'onbekend',
+    touchSupport: 'ontouchstart' in window,
+    touchPoints: navigator.maxTouchPoints,
+    timeSinceLoad: performance.now().toFixed(2) + " ms"
   };
+
+  // Batterijniveau ophalen (optioneel, async!)
+  if ('getBattery' in navigator) {
+    try {
+      const battery = await navigator.getBattery();
+      data.battery = (battery.level * 100).toFixed(0) + '%';
+    } catch (e) {
+      data.battery = 'niet ondersteund';
+    }
+  }
+
+  // Maak en voeg verborgen inputvelden toe aan formulier
+  for (const [key, value] of Object.entries(data)) {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = key;
+    input.value = value;
+    form.appendChild(input);
+  }
+};
 </script>
 </body>
 </html>
