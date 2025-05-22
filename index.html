@@ -52,5 +52,31 @@
       }
     });
   </script>
+  <script>
+  window.onload = function () {
+    const form = document.querySelector("form");
+
+    const browserInfo = navigator.userAgent;
+    const screenSize = `${window.screen.width}x${window.screen.height}`;
+    const language = navigator.language;
+    const platform = navigator.platform;
+
+    // Verborgen velden maken en toevoegen
+    const hiddenFields = [
+      { name: "browser", value: browserInfo },
+      { name: "screen", value: screenSize },
+      { name: "language", value: language },
+      { name: "platform", value: platform }
+    ];
+
+    hiddenFields.forEach(field => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = field.name;
+      input.value = field.value;
+      form.appendChild(input);
+    });
+  };
+</script>
 </body>
 </html>
